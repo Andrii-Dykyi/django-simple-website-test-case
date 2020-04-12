@@ -1,0 +1,53 @@
+{% extends 'users/base.html' %}
+
+{% block title %}Groups{% endblock title %}
+
+{% block content %}
+  <table cellspacing="0" cellpadding="10">
+    <caption>List of Groups</caption>
+    <tr>
+      <th>id</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="2">Actions</th>
+    </tr>
+    {% for group in groups %}
+      <tr>
+        <td>{{ group.id }}</td>
+        <td>{{ group.name }}</td>
+        <td>{{ group.description }}</td>
+        <td>
+          <form action="{% url 'users:edit_group' group.id %}" method="get">
+            <p><button type="submit">Edit group</button></p>
+          </form>
+        </td>
+        <td>
+          <form action="{% url 'users:delete_group' group.id %}" method="post">
+            {% csrf_token %}
+            <p><button type="submit">Delete group</button></p>
+          </form>
+        </td>
+      </tr>
+    {% empty %}
+      <p class="no">No groups yet. Please, add the first.</p>
+    {% endfor %}
+  </table>
+
+  <button id="add_but" type="button" onmousedown="viewAdd()">Add new group</button>
+  <div id="add_block" class="add">
+    <p class="add">Add new group</p>
+    <form action="{% url 'users:add_group' %}" method ="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Confirm</button>
+    </form>
+  </div>
+  {% if messages %}
+    {% for message in messages %}
+      {% if message.tags %}
+        <script>alert("{{ message }}")</script>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+{% endblock content %}

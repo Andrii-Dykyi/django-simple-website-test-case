@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+    <script src="{% static 'users/script.js' %}"></script>
+    <title>{% block title %}Home{% endblock title %}</title>
+  </head>
+
+  <body>
+    <nav>
+      <a href="{% url 'users:index' %}">Home</a> -
+      <a href="{% url 'users:users_list' %}">Users</a> -
+      <a href="{% url 'users:groups_list' %}">Groups</a>
+    </nav>
+
+    {% block content %}
+    {% endblock content %}
+  </body>
+
+</html>
